@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <title></title>
+    </head>
+    <body>
+        <script type="text/javascript" src="jquery.js"></script>
+        <script type="text/javascript" src="jquery.collection.js"></script>
+        <script type="text/javascript" src="jsonpath-0.8.0.js"></script>
+        <script type="text/javascript" src="json2.js"></script>
+        <script type="text/javascript" src="jquery.jsonpath.js"></script>
+        <script type="text/javascript" >
+        (function($){
+	        $(document).ready(function(){
+	        	var M = $.jsonpath;
+	            console.log("\
+	                \n/*****************************************************************\
+	                \n/*****************************************************************\
+	                \n*   \
+	                \n*   jQuery.jsonpath\
+	                \n*   \
+	                \n********************************************************************/\
+	                \n/*****************************************************************\
+	            \n\n");
+	            var js = {
+	                $xml$lang: 'gibberish',
+	                foo: 'bar', 
+	                goop: 'pooh',
+	                $blah:'barf',
+	                $rah:'jah',
+	                abc: {def:123, ghi:456, $xsi:"http://foo"},
+	                jkl:[1,2,3,4,5,6,7,8,9,{
+	                    $a:1,b:2, c:false, 
+	                    d:{
+	                        $x:'lambda',
+	                        y:{$m:4,$n:5,$o:6},
+	                        z:[7,8,9]
+	                    }
+	                },{
+	                    $a:5,b:6, c:true, 
+	                    d:{
+	                        $x:'phi',
+	                        y:{$m:4,$n:5,$o:6},
+	                        z:[7,8,9]
+	                    }
+	                },{
+	                    $a:2,b:1, 
+	                    d:{
+	                        $x:'gamma',
+	                        y:{$m:4,$n:2,$o:9},
+	                        z:[2,3,"apple"]
+	                    }
+	                }]
+	            };
+			
+	            update("M('$.foo', js).json()",
+	            		M('$.foo', js).json());
+	            update("M('$..d', js).json()",
+	            		M('$..d', js).json());
+	            update("M('$..d', js).size()",
+	            		M('$..d', js).size());
+	            update("M('$..d', js).attr('$x')",
+	            		M('$..d', js).attr('$x'));
+	            update("M('$..d', js).get(1).$x",
+	            		M('$..d', js).get(1).$x);
+	            update("M('$..d', js).slice(1).attr('$x')",
+	            		M('$..d', js).slice(1).attr('$x'));
+	            update("M('$..jkl[10].d', js).attr('$x')",
+	            		M('$..jkl[10].d', js).attr('$x'));
+	            		
+	            var store =  {
+	            	"name":"Novelty Used Books",
+	            	"address" : {
+	            		"street": "1234 W. Main St.",
+	            		"city" : "Shepherdstown",
+	            		"state": "WV",
+	            		"zip": "25425"
+	            	},
+				    "book": [ 
+				      { "category": "reference",
+				        "author": "Nigel Rees",
+				        "title": "Sayings of the Century",
+				        "price": 8.95
+				      },
+				      { "category": "fiction",
+				        "author": "Evelyn Waugh",
+				        "title": "Sword of Honour",
+				        "price": 12.99
+				      },
+				      { "category": "fiction",
+				        "author": "Herman Melville",
+				        "title": "Moby Dick",
+				        "isbn": "0-553-21311-3",
+				        "price": 8.99
+				      },
+				      { "category": "fiction",
+				        "author": "J. R. R. Tolkien",
+				        "title": "The Lord of the Rings",
+				        "isbn": "0-395-19395-8",
+				        "price": 22.99
+				      }
+				    ],
+				    "bicycle": {
+				      "color": "red",
+				      "price": 19.95
+				    }
+				  };
+				
+	            update("M('$.name', store).json()",
+	            		M('$.name', store).json());
+	            update("M('$.address', store).json()",
+	            		M('$.address', store).json());
+	            update("M('$.book[*]', store).json()",
+	            		M('$.book[*]', store).json());
+	            update("M('$..title', store).json()",
+	            		M('$..title', store).json());
+	            update("M('$..book[?(@.isbn)]', store).json()",
+	            		M('$..book[?(@.isbn)]', store).json());
+	      	}); 
+	      	var update = function(path, result){
+	      		$("tbody").append(
+	      			"<tr><td>"+
+	      				path + "</td><td>" + result
+	      			+"</td></tr>"
+	      		);	
+	      	};  
+        })(jQuery);
+        </script>
+	    <table border="1px;">
+	    	<thead>
+	    		<td>Path</td>
+	    		<td>Results</td>
+	    	</thead>
+	    	<tfoot>
+	    		<td>Path</td>
+	    		<td>Results</td>
+	    	</tfoot>
+	    	<tbody>
+			</tbody>
+		</table>
+    </body>
+</html>
