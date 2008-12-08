@@ -8,13 +8,11 @@
     <body>
         <script type="text/javascript" src="jquery.js"></script>
         <script type="text/javascript" src="jquery.collection.js"></script>
-        <script type="text/javascript" src="jsonpath-0.8.0.js"></script>
-        <script type="text/javascript" src="json2.js"></script>
-        <script type="text/javascript" src="jquery.jsonpath.js"></script>
+        <script type="text/javascript" src="jquery.json.js"></script>
         <script type="text/javascript" >
         (function($){
 	        $(document).ready(function(){
-	        	var M = $.jsonpath;
+	        	var M = $.jspath;
 	            console.log("\
 	                \n/*****************************************************************\
 	                \n/*****************************************************************\
@@ -55,10 +53,10 @@
 	                }]
 	            };
 			
-	            update("M('$.foo', js).json()",
-	            		M('$.foo', js).json());
-	            update("M('$..d', js).json()",
-	            		M('$..d', js).json());
+	            update("M('$.foo', js)",
+	            		M('$.foo', js));
+	            update("M('$..d', js)",
+	            		M('$..d', js));
 	            update("M('$..d', js).size()",
 	            		M('$..d', js).size());
 	            update("M('$..d', js).attr('$x')",
@@ -108,16 +106,16 @@
 				    }
 				  };
 				
-	            update("M('$.name', store).json()",
-	            		M('$.name', store).json());
-	            update("M('$.address', store).json()",
-	            		M('$.address', store).json());
-	            update("M('$.book[*]', store).json()",
-	            		M('$.book[*]', store).json());
-	            update("M('$..title', store).json()",
-	            		M('$..title', store).json());
-	            update("M('$..book[?(@.isbn)]', store).json()",
-	            		M('$..book[?(@.isbn)]', store).json());
+	            update("M('$.name', store)",
+	            		M('$.name', store));
+	            update("M('$.address', store)",
+	            		M('$.address', store));
+	            update("M('$.book[*]', store)",
+	            		M('$.book[*]', store));
+	            update("M('$..title', store))",
+	            		M('$..title', store));
+	            update("M('$..book[?(@.isbn)]', store)",
+	            		M('$..book[?(@.isbn)]', store));
 	      	}); 
 	      	var update = function(path, result){
 	      		$("tbody").append(

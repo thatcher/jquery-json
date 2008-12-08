@@ -1,23 +1,20 @@
 (function($){
 
-	
-	$.jsonString = function(js, filter, indentValue){
-	    return JSON.stringify(js, filter, indentValue);
+	//Basic JSON Utilities (thin wrap of json2.js)
+	$.js2json = function(js, filter, indentValue){
+	    return JSON.stringify(js, filter, indentValue||'  ');
 	};
 	
-	$.parseJSON = function(json, filter){
+	$.json2js = function(json, filter){
 	    return JSON.parse(json, filter);
 	};
 	
-	$.stripJS = function(js, filter){
+	$.stripjs = function(js, filter){
 	    return $.parseJSON($.jsonString(js, filter, '  '));
 	};
 	
-	$.prettyJSON = function(js, filter, indentValue){
-	    return JSON.stringify(js, null, '  ');
-	};
 	
-	
+	//Basic JSON Path Utilities (thin wrap of jsonpath.js)
 	$.jspath = $.collection.build();
 	
 	$.jspath.fn.init = function(path, jsObject, pathOrResult){
@@ -32,9 +29,9 @@
 	$.jspath.fn.toString = function(js){
 		var i = 0, str = [];
 		if(js){
-	        return $.jsonString(js);
+	        return $.js2json(js);
         }
-		return $.jsonString(this[i]);
+		return $.js2json(this[i]);
 	};
 	
 	/* JSONPath 0.8.0 - XPath for JSON
