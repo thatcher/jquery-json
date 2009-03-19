@@ -10,7 +10,7 @@
 	};
 	
 	$.stripjs = function(js, filter){
-	    return $.parseJSON($.jsonString(js, filter, '  '));
+	    return $.json2js($.js2json(js, filter, '  '));
 	};
 	
 	
@@ -157,7 +157,9 @@
                  f(this.getUTCSeconds())   + 'Z';
         };
 
-        String.prototype.toJSON =
+        String.prototype.toJSON = function (key) {
+            return String(this);
+        };
         Number.prototype.toJSON =
         Boolean.prototype.toJSON = function (key) {
             return this.valueOf();
