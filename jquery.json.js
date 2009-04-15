@@ -13,13 +13,28 @@
 	    return $.json2js($.js2json(js, filter, '  '));
 	};
 	
-	
+	var __context__ = {};
 	//Basic JSON Path Utilities (thin wrap of jsonpath.js)
 	$.jspath = $.collection.build();
 	
 	$.jspath.fn.init = function(path, jsObject, pathOrResult){
-		if(!jsObject)jsObject = window;
-		if(!(typeof path == "string")) path = "$.*";
+		if(arguments.length === 0){
+			return this.setArray(__context__.length?
+				__context__:[__context__]);
+		}
+		if (!jsObject) {
+			jsObject = __context__;
+		}
+		//in single arg case, if not a string
+		//it should set the context.
+		if (!(typeof path == "string")) {
+			__context__ = path;
+			return this.setArray(__context__.length?
+				__context__:[__context__]);
+		}else{
+			//we save the user from having to prepend $ on every query
+			path = "$"+path;
+		}
 		var result = jsonPath(jsObject, path, pathOrResult)||[];
 		return this.setArray(result);
 	};
@@ -27,11 +42,11 @@
 	$.jspath.fn.include( Array.prototype, 'join,push' );
 	
 	$.jspath.fn.toString = function(js){
-		var i = 0, str = [];
-		if(js){
-	        return $.js2json(js);
-        }
-		return $.js2json(this[i]);
+		return Array.prototype.join.apply(this, [' ']);
+	};
+	
+	$.jspath.fn.ex = function(js){
+		return '{'+Array.prototype.join.apply(this, [' '])+'}';
 	};
 	
 	/* JSONPath 0.8.0 - XPath for JSON

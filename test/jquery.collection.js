@@ -57,8 +57,9 @@
 		//imports the given methods (names) into target, from source (optional parse function)
 		include:function( target, source, methods, parse ){
 			if( !methods || !methods.slice ){
-				[].unshift.call( arguments, this );//insert 'this' first
-				return this.include.apply(this,arguments);//call again with fixed arguments
+				var args = Array.prototype.slice.call(arguments);
+				args.unshift(this); //insert 'this' first
+				return this.include.apply(this,args);//call again with fixed arguments
 			}
 			$.each( methods.split ? methods.split(/\s?,\s?/) : methods, function( i, func ){
 				target[func] = parse ? parse(source[func], func, source) : source[func];
