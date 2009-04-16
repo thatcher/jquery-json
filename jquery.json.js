@@ -1,143 +1,44 @@
-(function($){
+(function(_){
 
-	//Basic JSON Utilities (thin wrap of json2.js)
-	$.js2json = function(js, filter, indentValue){
-	    return JSON.stringify(js, filter, indentValue||'  ');
+	//Basic JSON Utilities 
+	_.js2json = function(js, filter, indentValue){
+	    return __JSON__.stringify(js, filter, indentValue||'  ');
 	};
 	
-	$.json2js = function(json, filter){
+	_.json2js = function(json, filter){
 	    return JSON.parse(json, filter);
 	};
 	
-	$.stripjs = function(js, filter){
-	    return $.json2js($.js2json(js, filter, '  '));
+	_.stripjs = function(js, filter){
+	    return _.json2js(_.js2json(js, filter, '  '));
 	};
 	
-	var __context__ = {};
-	//Basic JSON Path Utilities (thin wrap of jsonpath.js)
-	$.jspath = $.collection.build();
 	
-	$.jspath.fn.init = function(path, jsObject, pathOrResult){
-		if(arguments.length === 0){
-			return this.setArray(__context__.length?
-				__context__:[__context__]);
-		}
-		if (!jsObject) {
-			jsObject = __context__;
-		}
-		//in single arg case, if not a string
-		//it should set the context.
-		if (!(typeof path == "string")) {
-			__context__ = path;
-			return this.setArray(__context__.length?
-				__context__:[__context__]);
-		}else{
-			//we save the user from having to prepend $ on every query
-			path = "$"+path;
-		}
-		var result = jsonPath(jsObject, path, pathOrResult)||[];
-		return this.setArray(result);
-	};
-	
-	$.jspath.fn.include( Array.prototype, 'join,push' );
-	
-	$.jspath.fn.toString = function(js){
-		return Array.prototype.join.apply(this, [' ']);
-	};
-	
-	$.jspath.fn.ex = function(js){
-		return '{'+Array.prototype.join.apply(this, [' '])+'}';
-	};
-	
-	/* JSONPath 0.8.0 - XPath for JSON
-	 *
-	 * Copyright (c) 2007 Stefan Goessner (goessner.net)
-	 * Licensed under the MIT (MIT-LICENSE.txt) licence.
-	 */
-	function jsonPath(obj, expr, arg) {
-	   var P = {
-	      resultType: arg && arg.resultType || "VALUE",
-	      result: [],
-	      normalize: function(expr) {
-	         var subx = [];
-	         return expr.replace(/[\['](\??\(.*?\))[\]']/g, function($0,$1){return "[#"+(subx.push($1)-1)+"]";})
-	                    .replace(/'?\.'?|\['?/g, ";")
-	                    .replace(/;;;|;;/g, ";..;")
-	                    .replace(/;$|'?\]|'$/g, "")
-	                    .replace(/#([0-9]+)/g, function($0,$1){return subx[$1];});
-	      },
-	      asPath: function(path) {
-	         var x = path.split(";"), p = "$";
-	         for (var i=1,n=x.length; i<n; i++)
-	            p += (/^[0-9*]+$/).test(x[i]) ? ("["+x[i]+"]") : ("['"+x[i]+"']");
-	         return p;
-	      },
-	      store: function(p, v) {
-	         if (p) P.result[P.result.length] = P.resultType == "PATH" ? P.asPath(p) : v;
-	         return !!p;
-	      },
-	      trace: function(expr, val, path) {
-	         if (expr) {
-	            var x = expr.split(";"), loc = x.shift();
-	            x = x.join(";");
-	            if (val && val.hasOwnProperty(loc))
-	               P.trace(x, val[loc], path + ";" + loc);
-	            else if (loc === "*")
-	               P.walk(loc, x, val, path, function(m,l,x,v,p) { P.trace(m+";"+x,v,p); });
-	            else if (loc === "..") {
-	               P.trace(x, val, path);
-	               P.walk(loc, x, val, path, function(m,l,x,v,p) { typeof v[m] === "object" && P.trace("..;"+x,v[m],p+";"+m); });
-	            }
-	            else if (/,/.test(loc)) { // [name1,name2,...]
-	               for (var s=loc.split(/'?,'?/),i=0,n=s.length; i<n; i++)
-	                  P.trace(s[i]+";"+x, val, path);
-	            }
-	            else if (/^\(.*?\)$/.test(loc)) // [(expr)]
-	               P.trace(P.eval(loc, val, path.substr(path.lastIndexOf(";")+1))+";"+x, val, path);
-	            else if (/^\?\(.*?\)$/.test(loc)) // [?(expr)]
-	               P.walk(loc, x, val, path, function(m,l,x,v,p) { if (P.eval(l.replace(/^\?\((.*?)\)$/,"$1"),v[m],m)) P.trace(m+";"+x,v,p); });
-	            else if (/^(-?[0-9]*):(-?[0-9]*):?([0-9]*)$/.test(loc)) // [start:end:step]  phyton slice syntax
-	               P.slice(loc, x, val, path);
-	         }
-	         else
-	            P.store(path, val);
-	      },
-	      walk: function(loc, expr, val, path, f) {
-	         if (val instanceof Array) {
-	            for (var i=0,n=val.length; i<n; i++)
-	               if (i in val)
-	                  f(i,loc,expr,val,path);
-	         }
-	         else if (typeof val === "object") {
-	            for (var m in val)
-	               if (val.hasOwnProperty(m))
-	                  f(m,loc,expr,val,path);
-	         }
-	      },
-	      slice: function(loc, expr, val, path) {
-	         if (val instanceof Array) {
-	            var len=val.length, start=0, end=len, step=1;
-	            loc.replace(/^(-?[0-9]*):(-?[0-9]*):?(-?[0-9]*)$/g,
-	                function($0,$1,$2,$3){start=parseInt($1||start,10);end=parseInt($2||end,10);step=parseInt($3||step,10);});
-	            start = (start < 0) ? Math.max(0,start+len) : Math.min(len,start);
-	            end   = (end < 0)   ? Math.max(0,end+len)   : Math.min(len,end);
-	            for (var i=start; i<end; i+=step)
-	               P.trace(i+";"+expr, val, path);
-	         }
-	      },
-	      eval: function(x, _v, _vname) {
-	         try { return $ && _v && eval(x.replace(/@/g, "_v")); }
-	         catch(e) { throw new SyntaxError("jsonPath: " + e.message + ": " + x.replace(/@/g, "_v").replace(/\^/g, "_a")); }
-	      }
-	   };
-	
-	   var $ = obj;
-	   if (expr && obj && (P.resultType == "VALUE" || P.resultType == "PATH")) {
-	      P.trace(P.normalize(expr).replace(/^\$;/,""), obj, "$");
-	      return P.result.length ? P.result : false;
-	   }
-	};
-	
+    /**
+     * __json__ is used internally to store the selected
+     * json parsing methodolgy
+     * 
+     * This method of optimization is from http://
+     */
+	var __json__ = null;
+	if ( typeof JSON !== "undefined" ) {
+		__json__ = JSON;
+	}
+	var JSON = {
+	    parse: function( text , safe) {
+           if(__json__ !== null || safe){
+    	       return ( __json__ !== null) ?
+    	           __json__.parse( text ) :
+        	       __JSON__.parse(text);
+           }
+           if ( browser.gecko ) {
+                return new Function( "return " + text )();
+           }
+            return eval( "(" + text + ")" );
+	    }
+	};  
+    
+           
 	/*
 	    http://www.JSON.org/json2.js
 	    2008-07-15
@@ -155,7 +56,7 @@
 	    USE YOUR OWN COPY. IT IS EXTREMELY UNWISE TO LOAD CODE FROM SERVERS YOU DO
 	    NOT CONTROL.
 	*/
-    var JSON = function () {
+    var __JSON__ = function () {
 
         function f(n) {
             // Format integers to have at least two digits.
@@ -369,5 +270,49 @@ replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
         };
     }();
 
+    /**
+	 * from yui we determine the browser
+	 */
+	//yui
+	var Browser = function() {
+	   var o = {
+	       ie: 0,
+	       opera: 0,
+	       gecko: 0,
+	       webkit: 0
+	   };
+	   var ua = navigator.userAgent, m;
+	   if ( ( /KHTML/ ).test( ua ) ) {
+	       o.webkit = 1;
+	   }
+	   // Modern WebKit browsers are at least X-Grade
+	   m = ua.match(/AppleWebKit\/([^\s]*)/);
+	   if (m&&m[1]) {
+	       o.webkit=parseFloat(m[1]);
+	   }
+	   if (!o.webkit) { // not webkit
+	       // @todo check Opera/8.01 (J2ME/MIDP; Opera Mini/2.0.4509/1316; fi; U; ssr)
+	       m=ua.match(/Opera[\s\/]([^\s]*)/);
+	       if (m&&m[1]) {
+	           o.opera=parseFloat(m[1]);
+	       } else { // not opera or webkit
+	           m=ua.match(/MSIE\s([^;]*)/);
+	           if (m&&m[1]) {
+	               o.ie=parseFloat(m[1]);
+	           } else { // not opera, webkit, or ie
+	               m=ua.match(/Gecko\/([^\s]*)/);
+	               if (m) {
+	                   o.gecko=1; // Gecko detected, look for revision
+	                   m=ua.match(/rv:([^\s\)]*)/);
+	                   if (m&&m[1]) {
+	                       o.gecko=parseFloat(m[1]);
+	                   }
+	               }
+	           }
+	       }
+	   }
+	   return o;
+	};
+	var browser = Browser();
 
-})(jQuery);
+})(jsPath);

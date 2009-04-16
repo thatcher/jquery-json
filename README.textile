@@ -1,0 +1,3 @@
+based on results from 
+
+http://weblogs.asp.net/yuanjian/archive/2009/03/22/json-performance-comparison-of-eval-new-function-and-json.aspx

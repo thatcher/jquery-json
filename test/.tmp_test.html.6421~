@@ -5,21 +5,11 @@
     <title>jquery-jspath unit tests</title>
     <link rel="Stylesheet" media="screen" href="testsuite.css"/>
     <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="jquery.collection.js"></script>
     <script type="text/javascript" src="jqUnit.js"></script>
     <script type="text/javascript" src="jqunit-spec.js"></script>
-    <script type="text/javascript" src="../../jquery-jspath/jquery.jspath.js">
-        <!--
-        /**
-         * for this spec to work you need to download 
-         * 
-         *     - http://github.com/thatcher/jquery-jspath -
-         *     
-         * into the same folder that holds this project.
-         */ 
-         -->
-    </script>
     <script type="text/javascript" src="../jquery.json.js"></script>
-    <script type="text/javascript" src="json-spec.js"></script>
+    <script type="text/javascript" src="jspath-spec.js"></script>
   </head>
   <body id="body">
     <h1 id="header">jquery-jspath unit tests</h1>

@@ -1,45 +1,31 @@
 {
     "count":15,
-    "value":
-    {
+    "value": {
         "title":"generic",
         "description":"generic rss feed",
         "link":"http:\/\/pipes.yahoo.com\/pipes\/pipe.info?_id=9oyONQzA2xGOkM4FqGIyXQ",
-        "pubDate":"Sat,
-         11 Oct 2008 21:03:34 PDT",
+        "pubDate":"Sat, 11 Oct 2008 21:03:34 PDT",
         "generator":"http:\/\/pipes.yahoo.com\/pipes\/",
         "callback":"piper",
-        "items":
-        [
-            {
-                "link":"http:\/\/www.flowplayer.org\/tools\/scrollable.html",
-                "dc:date":"2008-05-31T02:52:45Z",
-                "dc:creator":"quasarkitten",
-                "taxo:topics":
-                {
-                    "rdf:Bag":
-                    {
-                        "rdf:li":
-                        [
-                            {
-                                "rdf:resource":"http:\/\/delicious.com\/tag\/plugin"
-                            },
-                            {
-                                "rdf:resource":"http:\/\/delicious.com\/tag\/jquery"
-                            },
-                            {
-                                "rdf:resource":"http:\/\/delicious.com\/tag\/javascript"
-                            }
-                        ]
-                    }
-                },
-                "rdf:about":"http:\/\/www.flowplayer.org\/tools\/scrollable.html",
-                "y:title":"Scroll your HTML with jquery.scrollable.js",
-                "dc:subject":"plugin jquery javascript",
-                "title":"Scroll your HTML with jquery.scrollable.js",
-                "pubDate":"2008-05-31T02:52:45Z",
-                "y:published":
-                {
+        "items":[{
+            "link":"http:\/\/www.flowplayer.org\/tools\/scrollable.html",
+            "dc:date":"2008-05-31T02:52:45Z",
+            "dc:creator":"quasarkitten",
+            "taxo:topics": {
+                "rdf:Bag": {
+                    "rdf:li":[
+                        {"rdf:resource":"http:\/\/delicious.com\/tag\/plugin"},
+                        {"rdf:resource":"http:\/\/delicious.com\/tag\/jquery"},
+                        {"rdf:resource":"http:\/\/delicious.com\/tag\/javascript"}
+                     ]
+                 }
+             },
+            "rdf:about":"http:\/\/www.flowplayer.org\/tools\/scrollable.html",
+            "y:title":"Scroll your HTML with jquery.scrollable.js",
+            "dc:subject":"plugin jquery javascript",
+            "title":"Scroll your HTML with jquery.scrollable.js",
+            "pubDate":"2008-05-31T02:52:45Z",
+            "y:published": {
                     "hour":"2",
                     "timezone":"floating",
                     "second":"45",
@@ -307,17 +293,9 @@
                     }
                 },
                 "rdf:about":"http:\/\/jsbin.com\/",
-                "y:title":"JS Bin - 
-                [
-                    unsaved
-                ]
-                ",
+                "y:title":"JS Bin - [ unsaved ]",
                 "dc:subject":"javascript collaborative",
-                "title":"JS Bin - 
-                [
-                    unsaved
-                ]
-                ",
+                "title":"JS Bin -  [ unsaved ]",
                 "pubDate":"2008-09-29T12:54:54Z",
                 "y:published":
                 {
@@ -585,13 +563,9 @@
                     }
                 },
                 "rdf:about":"http:\/\/jquery.com\/",
-                "y:title":"jQuery: The Write Less,
-                 Do More,
-                 JavaScript Library",
+                "y:title":"jQuery: The Write Less, Do More, JavaScript Library",
                 "dc:subject":"webdev javascript",
-                "title":"jQuery: The Write Less,
-                 Do More,
-                 JavaScript Library",
+                "title":"jQuery: The Write Less, Do More, JavaScript Library",
                 "pubDate":"2006-01-13T21:34:56Z",
                 "y:published":
                 {
