@@ -4,6 +4,17 @@
 	_.js2json = function(js, filter, indentValue){
 	    return __JSON__.stringify(js, filter, indentValue||'  ');
 	};
+    
+    _.fn.js2json = function( filter, indentValue){
+        var i, str='[';
+        for(i=0;i<this.length;i++){
+            str += __JSON__.stringify(this[i], filter, indentValue||'  ');
+            if(!(i+1 == this.length)){
+                str+=',\n'
+            }
+        }
+	    return str + ']';
+	};
 	
 	_.json2js = function(json, filter){
 	    return JSON.parse(json, filter);
