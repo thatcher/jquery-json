@@ -1,27 +1,64 @@
+/**
+ * Basic JSON Utilities for jquery-jspath
+ */
 (function(_){
 
-	//Basic JSON Utilities 
-	_.js2json = function(js, filter, indentValue){
-	    return __JSON__.stringify(js, filter, indentValue||'  ');
+	/**
+	 * @param {Object} js 
+	 * @param {Object} filter
+	 * @param {Object} indentValue
+	 */ 
+	_.json = _.js2json = function(js, filter, indentValue){
+	    return __JSON__.stringify(js, filter, indentValue||'');
 	};
     
-    _.fn.js2json = function( filter, indentValue){
+    /**
+     * @param {Object} filter
+     * @param {Object} indentValue
+     */
+    _.fn.json = _.fn.js2json = function( filter, indentValue){
         var i, str='[';
         for(i=0;i<this.length;i++){
-            str += __JSON__.stringify(this[i], filter, indentValue||'  ');
+            str += __JSON__.stringify(this[i], filter, indentValue||'');
             if(!(i+1 == this.length)){
                 str+=',\n'
             }
         }
 	    return str + ']';
 	};
-	
-	_.json2js = function(json, filter){
+    
+	/**
+	 * @param {Object} json
+	 * @param {Object} filter
+	 */
+	_.eval = _.json2js = function(json, filter){
 	    return JSON.parse(json, filter);
 	};
+    
+    /** 
+     * @param {Object} filter
+     */
+    _.fn.eval = _.fn.json2js = function(filter){
+        var i,js = [];
+	    for(i=0;i<this.length;i++){
+            js[i] = JSON.parse(this[i], filter);
+        }
+        return js;
+	};
 	
-	_.stripjs = function(js, filter){
-	    return _.json2js(_.js2json(js, filter, '  '));
+    /**
+     * @param {Object} js
+     * @param {Object} filter
+     */
+	_.strip = _.stripjs = function(js, filter){
+	    return _.eval(_.js2json(js, filter, ''));
+	};
+    
+    /**
+     * @param {Object} filter
+     */
+    _.fn.strip = _.fn.stripjs = function(filter){
+	    return _.eval(this.js2json(filter, ''));
 	};
 	
 	
@@ -29,7 +66,9 @@
      * __json__ is used internally to store the selected
      * json parsing methodolgy
      * 
-     * This method of optimization is from http://
+     * This method of optimization is from 
+     * 
+     * http://weblogs.asp.net/yuanjian/archive/2009/03/22/json-performance-comparison-of-eval-new-function-and-json.aspx
      */
 	var __json__ = null;
 	if ( typeof JSON !== "undefined" ) {

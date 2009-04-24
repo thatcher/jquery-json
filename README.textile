@@ -1,3 +1,25 @@
-based on results from 
+h1. jquery-json - a jspath plugin
+
+jquery-json is a jspath plugin that provides some json utilities based on results from 
 
 http://weblogs.asp.net/yuanjian/archive/2009/03/22/json-performance-comparison-of-eval-new-function-and-json.aspx
+
+to make json evaluation as fast as possible for the given browser environment.  
+It also provides a thin wrapper around JSON.org/json2.js so you easily decide
+when to treat the evaluation safely, as well as it's serialization routines as well.
+
+Check out these other jquery-jspath plugins
+
+* http://github.com/thatcher/jquery-jspath
+* http://github.com/thatcher/jquery-json
+* http://github.com/thatcher/jquery-loremipsum
+* http://github.com/thatcher/jquery-objtree
+* http://github.com/thatcher/jquery-xslt
+
+also please check out the spec for each plugin (test/test.html).  special thanks to aaron quint for the 
+jqunit-spec plugin that all of these plugins use!
+
+
+
+
+

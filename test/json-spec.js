@@ -59,13 +59,12 @@
 		describe('_', 'js2json', {
 			before: function(){
 			}
-		}).it('can create a json strong from js', function(){
-            var expected = "{'a':'b'}";
+		}).it('can create a json string from js', function(){
+            var expected = '{"a":"b"}';
             var actual = _.js2json({a:'b'});
-            equals(expected, actual, 'json succesfully created.');
-		}).it('can create a json strong from js', function(){
-            var expected = "{'a':["+
-            "]}";
+            equals(actual, expected, 'json succesfully created.');
+		}).it('can create a json string from jsspath collection instance', function(){
+            var expected = '[{"a":[{"name":"chris","last":"thatcher"},{"name":"weilun","last":"jonah"}]}]';
             var actual = _({
                 a:[{
                     name:'chris',
@@ -75,7 +74,7 @@
                     last: 'jonah'
                 }]
             }).js2json();
-            equals(expected, actual, 'json succesfully created.');
+            equals(actual, expected,'json succesfully created.');
 		});
 		
 	}
