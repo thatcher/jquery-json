@@ -204,7 +204,7 @@
             case 'xml':
 
                 return '"'+value.toXMLString().
-                            replace('\n', '', 'g').
+                            replace('\n', '\\\n', 'g').
                             replace('"','\\"','g')+'"';
             case 'null':
 
