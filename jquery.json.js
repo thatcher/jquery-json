@@ -10,11 +10,13 @@
  * 
  * Basic JSON Utilities for jquery-jspath
  *
- *         depends on jquery-jspath 
+ * may be used as plugin to jquery-jspath 
  * ( http://github.com/thatcher/jquery-jspath )
  */
-(function(_){
+(function(){
 
+    var _ = jsPath||jQuery;
+    
 	/**
 	 * @param {Object} js 
 	 * @param {Object} filter
@@ -201,15 +203,15 @@
                 return isFinite(value) ? String(value) : 'null';
 
             case 'boolean':
+            case 'null':
+
+                return String(value);
+            
             case 'xml':
 
                 return '"'+value.toXMLString().
                             replace('\n', '\\\n', 'g').
-                            replace('"','\\"','g')+'"';
-            case 'null':
-
-                return String(value);
-                
+                            replace('"','\\"','g')+'"';    
             case 'object':
 
                 if (!value) {
@@ -382,4 +384,4 @@ replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
 	};
 	var browser = Browser();
 
-})(jsPath);
+})();
